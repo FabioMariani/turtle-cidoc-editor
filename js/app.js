@@ -25,17 +25,19 @@ var editor = CodeMirror.fromTextArea(document.getElementById("ta_turtle"), {
     theme: 'default'
 });
 
-var example =
-   ['@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .',
-    '@prefix dc: <http://purl.org/dc/elements/1.1/> .',
-    '@prefix ex: <http://example.org/stuff/1.0/> .',
-    '<http://www.w3.org/TR/rdf-syntax-grammar>',
-    '  dc:title "RDF/XML Syntax Specification (Revised)" ;',
-    '  ex:editor [',
-    '    ex:fullname "Dave Beckett";',
-    '    ex:homePage <http://purl.org/net/dajobe/>',
-    '  ] .'
-   ].join('\n');
+var example = `@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://linked.art/example/object/20> a crm:E22_Human-Made_Object ;
+    rdfs:label "Simple Example Painting" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300033618>,
+        <http://vocab.getty.edu/aat/300133025> .
+
+<http://vocab.getty.edu/aat/300033618> a crm:E55_Type ;
+    rdfs:label "Painting" .
+
+<http://vocab.getty.edu/aat/300133025> a crm:E55_Type ;
+    rdfs:label "Work of Art" .`;
 
 $("#btn_example").click( function () {
 editor.setValue(example);
