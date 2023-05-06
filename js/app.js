@@ -53,7 +53,7 @@ var example = `@prefix rdfs: <https://www.w3.org/2000/01/rdf-schema#> .
 $("#btn_example").click( function () {
 	if (confirm("Are you sure?") == true) {
 		editor.setValue(example);
-	})
+	}
 });
 
 $("#btn_download").click( function () {
