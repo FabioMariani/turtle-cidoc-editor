@@ -25,19 +25,30 @@ var editor = CodeMirror.fromTextArea(document.getElementById("ta_turtle"), {
     theme: 'default'
 });
 
-var example = `@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+var example = `@prefix rdfs: <https://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns> .
 
-<https://example.art/object/20> a crm:E22_Human-Made_Object ;
-    rdfs:label "Simple Example Painting" ;
-    crm:P2_has_type <http://vocab.getty.edu/aat/300033618>,
-        <http://vocab.getty.edu/aat/300133025> .
 
-<http://vocab.getty.edu/aat/300033618> a crm:E55_Type ;
-    rdfs:label "Painting" .
+#defining a Class
+<http://example.com/City> a rdfs:Class ;
+	rdfs:label "City" ;
+	rdfs:comment "A permanent settled place with administratively defined boundaries." ;
+	rdfs:subClassOf <http://example.com/Place> .
 
-<http://vocab.getty.edu/aat/300133025> a crm:E55_Type ;
-    rdfs:label "Work of Art" .`;
+#defining an Object Property (range is an URI)
+<http://example.com/capital_of> a rdf:Property ;
+	rdfs:label "is capital of" ;
+	rdfs:comment "The relationship between a city and a country as its capital city." ;
+	rdfs:subPropertyOf <http://example.com/city_of> ;
+	rdfs:domain <http://example.com/City> ;
+	rdfs:range <http://example.com/Country> .
+
+#defining a Data Property (range is a Literal)
+<http://example.com/has_name> a rdf:Property ;
+	rdfs:label "has name" ;
+	rdfs:comment "The property defining the name of a thing." ;
+	rdfs:domain <http://example.com/Thing> ;
+	rdfs:range rdfs:Literal .`;
 
 $("#btn_example").click( function () {
 editor.setValue(example);
