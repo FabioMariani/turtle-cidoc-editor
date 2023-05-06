@@ -51,25 +51,27 @@ var example = `@prefix rdfs: <https://www.w3.org/2000/01/rdf-schema#> .
 	rdfs:range rdfs:Literal .`;
 
 $("#btn_example").click( function () {
-editor.setValue(example);
+	if (confirm("Are you sure?") == true) {
+		editor.setValue(example);
+	})
 });
 
 $("#btn_download").click( function () {
-var textToWrite = editor.getValue();
-var textToWrite = textToWrite.replace(/\n/g, "\r\n");
-var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
-var fileNameToSaveAs = "FILENAME.ttl";
-var downloadLink = document.createElement("a");
-downloadLink.download = fileNameToSaveAs;
-downloadLink.innerHTML = "Turtle Web Editor Content";
-window.URL = window.URL || window.webkitURL;
-downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-downloadLink.onclick = destroyClickedElement;
-downloadLink.style.display = "none";
-document.body.appendChild(downloadLink);
-downloadLink.click();
+	var textToWrite = editor.getValue();
+	var textToWrite = textToWrite.replace(/\n/g, "\r\n");
+	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+	var fileNameToSaveAs = "FILENAME.ttl";
+	var downloadLink = document.createElement("a");
+	downloadLink.download = fileNameToSaveAs;
+	downloadLink.innerHTML = "Turtle Web Editor Content";
+	window.URL = window.URL || window.webkitURL;
+	downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+	downloadLink.onclick = destroyClickedElement;
+	downloadLink.style.display = "none";
+	document.body.appendChild(downloadLink);
+	downloadLink.click();
 });
 
 function destroyClickedElement(event) {
-document.body.removeChild(event.target);
+	document.body.removeChild(event.target);
 }
