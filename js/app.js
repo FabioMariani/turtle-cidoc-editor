@@ -73,3 +73,39 @@ downloadLink.click();
 function destroyClickedElement(event) {
 document.body.removeChild(event.target);
 }
+
+var dropZone = document.body;
+
+function getExtension(filename) {
+  var parts = filename.split('.');
+  return parts[parts.length - 1];
+}
+
+function isTTL(filename) {
+  var ext = getExtension(filename);
+  switch (ext.toLowerCase()) {
+      return true;
+  }
+  return false;
+}
+
+// Get file data on drop
+dropZone.addEventListener('drop', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    var files = e.dataTransfer.files; // Array of all files
+
+    for (var i=0, file; file=files[i]; i++) {
+        if (isTTL(file)) {
+            var reader = new FileReader();
+	    reader.addEventListener(
+		    "load",
+		    () => {
+		     editor.setValue(reader.result);
+		    },
+		    false
+		  );
+            reader.readAsText(file)
+        }
+    }
+});
